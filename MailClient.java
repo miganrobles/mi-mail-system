@@ -57,6 +57,17 @@ public class MailClient
     }
     
     /**
+     * Este método obtiene del servidor un mensaje para el ususario y envía una respuesta automática
+     */
+    public void getNextMailItemAndSendAutomaticRespond()
+    {
+        MailItem email = getNextMailItem();
+        if (email != null) {
+            sendMailItem(email.getFrom(),"RE: " + email.getSubject() , "Estoy en la oficina.\n" +  email.getMessage());
+        }
+    }
+    
+    /**
      * Método printNextMailItem que recupera del servidor el siguiente correo que tenga el usuario e imprime por 
      * pantalla los datos de dicho mensaje. Si no hay ningun mensaje, muestra un mensaje por pantalla informando de ello.
      */
