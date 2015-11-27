@@ -22,14 +22,17 @@ public class MailItem
     private String to;
     // Atributo para el mensaje
     private String message;
+    // Atributo para el asunto del correo
+    private String subject;
 
     /**
      *  Constructor que permite crear un objeto MailItem inicializando sus atributos por medio de parámetros.
      */
-    public MailItem(String from, String to, String message)
+    public MailItem(String from, String to, String subject, String message)
     {
         this.from = from;
         this.to = to;
+        this.subject = subject;
         this.message = message;
     }
     
@@ -50,6 +53,14 @@ public class MailItem
     }
     
     /**
+     * Metodo que nos devuelve el asunto del mensaje
+     */
+    public String getSubject()
+    {
+        return subject;
+    }
+    
+    /**
      * Metodo que nos devuelve el mensaje
      */
     public String getMessage()
@@ -65,6 +76,7 @@ public class MailItem
     {
         System.out.println("De: " + from);
         System.out.println("Para: " + to);
+        System.out.println("Asunto: " + subject);
         System.out.println("Mensage: " + message);
     }
 }
