@@ -47,6 +47,16 @@ public class MailClient
     }
     
     /**
+     * Return how many mail items are waiting for a user.
+     * @param who The user to check for.
+     * @return How many items are waiting.
+     */
+    public int howManyMailItems()
+    {
+        return server.howManyMailItems(user);
+    }
+    
+    /**
      * Método printNextMailItem que recupera del servidor el siguiente correo que tenga el usuario e imprime por 
      * pantalla los datos de dicho mensaje. Si no hay ningun mensaje, muestra un mensaje por pantalla informando de ello.
      */
