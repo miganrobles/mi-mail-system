@@ -27,6 +27,8 @@ public class MailClient
     private MailServer server;
     // Este atributo representa la dirección de correo del usuario que usa ese cliente
     private String user;
+    // Atributo donde se almacena el último mensaje
+    private MailItem buzon;
 
     /**
      * Constructor para objetos de la clase MailClient que permite crear un objeto MailClient inicializando sus atributos 
@@ -36,6 +38,7 @@ public class MailClient
     {
         this.server = server;
         this.user = user;
+        buzon = null;
     }
     
     /**
@@ -43,7 +46,11 @@ public class MailClient
      */ 
     public MailItem getNextMailItem()
     {
-        return server.getNextMailItem(user);
+        MailItem email = server.getNextMailItem(user);
+        if (email!= null) {
+            buzon = email;
+        }
+        return email;
     }
     
     /**
@@ -61,8 +68,9 @@ public class MailClient
      */
     public void getNextMailItemAndSendAutomaticRespond()
     {
-        MailItem email = getNextMailItem();
+        MailItem email = server.getNextMailItem(user);
         if (email != null) {
+            buzon = email;
             sendMailItem(email.getFrom(),"RE: " + email.getSubject() , "Estoy en la oficina.\n" +  email.getMessage());
         }
     }
@@ -73,12 +81,16 @@ public class MailClient
      */
     public void printNextMailItem()
     {
-        MailItem email = getNextMailItem();
+        MailItem email = server.getNextMailItem(user);
         if (email != null) {
+            buzon = email;
             email.print();
         }
+        else if (buzon != null) {
+            buzon.print();
+        }
         else {
-            System.out.println("No tiene ningún mensaje nuevo.");
+            System.out.println("No ha recibido ningún mensaje aún");
         }
     }
     
@@ -92,4 +104,5 @@ public class MailClient
         MailItem email = new MailItem(user, para, asunto, mensaje);
         server.post(email);
     }
-}
+} 
+   
