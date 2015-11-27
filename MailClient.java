@@ -87,10 +87,16 @@ public class MailClient
             email.print();
         }
         else if (buzon != null) {
+            System.out.println("Este es el último correo recibido: ");
+            System.out.println("####################################################################################################################################");
+            System.out.println();
             buzon.print();
+            System.out.println();
+            System.out.println("####################################################################################################################################");
+            System.out.println("Y actualmente no tienes ningún correo nuevo");
         }
         else {
-            System.out.println("No ha recibido ningún mensaje aún");
+            System.out.println("No has recibido ningún mensaje aún");
         }
     }
     
