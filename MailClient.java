@@ -54,13 +54,11 @@ public class MailClient
     }
     
     /**
-     * Return how many mail items are waiting for a user.
-     * @param who The user to check for.
-     * @return How many items are waiting.
+     * Este método imprime por pantalla el número de mensajes que tiene el usuario en el servidor sin leer
      */
-    public int howManyMailItems()
+    public void howManyMailItems()
     {
-        return server.howManyMailItems(user);
+        System.out.println("Correos sin leer en el servidor: " + server.howManyMailItems(user));
     }
     
     /**
@@ -68,9 +66,8 @@ public class MailClient
      */
     public void getNextMailItemAndSendAutomaticRespond()
     {
-        MailItem email = server.getNextMailItem(user);
+        MailItem email = getNextMailItem();
         if (email != null) {
-            buzon = email;
             sendMailItem(email.getFrom(),"RE: " + email.getSubject() , "Estoy en la oficina.\n" +  email.getMessage());
         }
     }
@@ -81,22 +78,12 @@ public class MailClient
      */
     public void printNextMailItem()
     {
-        MailItem email = server.getNextMailItem(user);
+        MailItem email = getNextMailItem();
         if (email != null) {
-            buzon = email;
             email.print();
         }
-        else if (buzon != null) {
-            System.out.println("Este es el último correo recibido: ");
-            System.out.println("####################################################################################################################################");
-            System.out.println();
-            buzon.print();
-            System.out.println();
-            System.out.println("####################################################################################################################################");
-            System.out.println("Y actualmente no tienes ningún correo nuevo");
-        }
         else {
-            System.out.println("No has recibido ningún mensaje aún");
+            System.out.println("No tienes ningún mensaje");
         }
     }
     
@@ -109,6 +96,20 @@ public class MailClient
     {
         MailItem email = new MailItem(user, para, asunto, mensaje);
         server.post(email);
+    }
+    
+    /**
+     * Este método nos imprime por pantalla el último mensaje recibido
+     */
+    public void lastMensaje()
+    {
+        getNextMailItem();
+        if (buzon != null) {
+            buzon.print();
+        }
+        else {
+            System.out.println("No ha recibido ningún mensaje aún");
+        }
     }
 } 
    
