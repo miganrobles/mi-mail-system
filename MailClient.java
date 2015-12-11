@@ -133,8 +133,9 @@ public class MailClient
      */
     public void sendMailItem(String para, String asunto, String mensaje)
     {
+        int numeroCaracteres = mensaje.length();
         MailItem email = new MailItem(user, para, asunto, mensaje);
-        server.post(email);
+        server.post(email, numeroCaracteres);
         correosEnviados++;
     }
 
@@ -186,6 +187,7 @@ public class MailClient
      */
     public void sendMailItemWithTransmissionError(String para, String asunto, String mensaje)
     {
+        int numeroCaracteres = mensaje.length();
         if (mensaje.contains("o")) {
             mensaje = mensaje.replace("o", "#o");
         } 
@@ -193,7 +195,7 @@ public class MailClient
             mensaje = mensaje.replace("i", "$i");
         }   
         MailItem email = new MailItem(user, para, asunto, mensaje);
-        server.post(email);
+        server.post(email, numeroCaracteres);
         correosEnviados++;
     }
 }
