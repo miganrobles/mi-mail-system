@@ -27,8 +27,19 @@ public class MailClient
     private String user;
     // Atributo donde se almacena el último mensaje
     private MailItem buzon;
-    // Este atributo nos va a almecenar si el correo tiene spam
+    // Este atributo nos va a almecenar si el utltimo correo es spam
     private boolean spam;
+    // Este atirbuto almacena el número de correos enviados
+    private int correosEnviados;
+    // Este atirbuto almacena el número de correos recibidos
+    private float correosRecibidos;
+    // Este atirbuto almacena el número de correos que son spam
+    private float correosSpam;
+    // Este atributo almacen el mensaje más largo
+    private int mensajeMasLargo;
+    // Este atributo almacena la direccion del mensaje recibido que sea más largo
+    private String nombreCorreoMasLargo;
+
 
     /**
      * Constructor para objetos de la clase MailClient que permite crear un objeto MailClient inicializando sus atributos 
@@ -40,10 +51,14 @@ public class MailClient
         this.user = user;
         buzon = null;
         spam = false;
+        correosEnviados = 0;
+        correosRecibidos = 0;
+        correosSpam = 0;
+        mensajeMasLargo = 0;
     }
 
     /**
-     * Este método recupera del servidor el correo del ususario.
+     * Este método recupera del servidor el correo del ususario y nos va ha distinguir si es spam o no o si no tiene ningún mensaje.
      */ 
     public MailItem getNextMailItem()
     {
@@ -56,11 +71,17 @@ public class MailClient
             else if (email.getMessage().contains("regalo") || email.getMessage().contains("promocion")) {
                 spam = true;
                 email = null;
+                correosSpam++;
             }
             else  {
                 spam = false;
                 buzon = email;
             }
+            if (spam == false && email.getMessage().length() > mensajeMasLargo) {
+                mensajeMasLargo = email.getMessage().length();
+                nombreCorreoMasLargo = email.getFrom();
+            }
+            correosRecibidos++;
         }
         return email;
     }
@@ -111,6 +132,7 @@ public class MailClient
     {
         MailItem email = new MailItem(user, para, asunto, mensaje);
         server.post(email);
+        correosEnviados++;
     }
 
     /**
@@ -125,5 +147,20 @@ public class MailClient
         else {
             System.out.println("No ha recibido ningún mensaje aún");
         }
+    }
+    
+    /**
+     * Este método va ha mostrar por pantalla unas estadisticas de el número de mensajes enviados, recibidos, los que son spam, porcentaje de spam,
+     * la direccion de la persona que nos ha enviado el mensaje más largo y los caracteres que tenía.
+     */
+    public void showStats()
+    {
+        float a = correosSpam;
+        float b = correosRecibidos;
+        float porcentajeSpam = (a / b) * 100;
+        System.out.println("Número total de mensajes enviados: " + correosEnviados);
+        System.out.println("Número total de mensajes recibidos: " + correosRecibidos);
+        System.out.println("Número total de mensajes que son spam: " + correosSpam);
+        System.out.println("Porcentaje de mensajes que son spam: " + porcentajeSpam + "%");
     }
 } 
