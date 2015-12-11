@@ -32,9 +32,9 @@ public class MailClient
     // Este atirbuto almacena el número de correos enviados
     private int correosEnviados;
     // Este atirbuto almacena el número de correos recibidos
-    private float correosRecibidos;
+    private int correosRecibidos;
     // Este atirbuto almacena el número de correos que son spam
-    private float correosSpam;
+    private int correosSpam;
     // Este atributo almacen el mensaje más largo
     private int mensajeMasLargo;
     // Este atributo almacena la direccion del mensaje recibido que sea más largo
@@ -162,5 +162,7 @@ public class MailClient
         System.out.println("Número total de mensajes recibidos: " + correosRecibidos);
         System.out.println("Número total de mensajes que son spam: " + correosSpam);
         System.out.println("Porcentaje de mensajes que son spam: " + porcentajeSpam + "%");
+        System.out.println("Direccion de correo más largo recibido: " + nombreCorreoMasLargo);
+        System.out.println("Numero de caracteres del mensaje más largo : " + mensajeMasLargo);
     }
 } 
