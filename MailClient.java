@@ -182,4 +182,17 @@ public class MailClient
         }
     }
     
+    /**
+     * Metodo para simular mensaje transmitido con errores
+     */
+    public void sendMailItemWithTransmissionError(String para, String asunto, String mensaje)
+    {
+        MailItem email = new MailItem(user, para, asunto, mensaje);
+        if (email.getMessage().contains("o")) {
+            email.getMessage().replace("o", "#o");
+            email.getMessage().replace("i", "$i");
+            server.post(email);
+            correosEnviados++;
+        }
+    }
 } 
