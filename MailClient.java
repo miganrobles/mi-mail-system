@@ -39,6 +39,8 @@ public class MailClient
     private int mensajeMasLargo;
     // Este atributo almacena la direccion del mensaje recibido que sea más largo
     private String nombreCorreoMasLargo;
+    // Este atributos nos almacena el último spam recibido
+    private MailItem buzonSpam;
 
 
     /**
@@ -55,6 +57,7 @@ public class MailClient
         correosRecibidos = 0;
         correosSpam = 0;
         mensajeMasLargo = 0;
+        buzonSpam = null;
     }
 
     /**
@@ -70,6 +73,7 @@ public class MailClient
             }
             else if (email.getMessage().contains("regalo") || email.getMessage().contains("promocion")) {
                 spam = true;
+                buzonSpam = email;
                 email = null;
                 correosSpam++;
             }
@@ -140,7 +144,6 @@ public class MailClient
      */
     public void lastMensaje()
     {
-        getNextMailItem();
         if (buzon != null) {
             buzon.print();
         }
@@ -165,4 +168,18 @@ public class MailClient
         System.out.println("Direccion de correo más largo recibido: " + nombreCorreoMasLargo);
         System.out.println("Numero de caracteres del mensaje más largo : " + mensajeMasLargo);
     }
+    
+    /**
+     * Este metodo muestra por pantalla los datos del último spam recibido y si no se ha recibido ninguno nos informará de ello
+     */
+    public void showInfoSpam()
+    {
+        if (buzonSpam != null) {
+             buzonSpam.print();
+        }
+        else {
+            System.out.println("No ha recibido ningún mensaje con spam aún");
+        }
+    }
+    
 } 
