@@ -42,7 +42,6 @@ public class MailClient
     // Este atributos nos almacena el último spam recibido
     private MailItem buzonSpam;
 
-
     /**
      * Constructor para objetos de la clase MailClient que permite crear un objeto MailClient inicializando sus atributos 
      * por medio de parámetros que serán el nombre del servidor(tipo MailServer) y el nombre del usuario(tipo String).
@@ -151,7 +150,7 @@ public class MailClient
             System.out.println("No ha recibido ningún mensaje aún");
         }
     }
-    
+
     /**
      * Este método va ha mostrar por pantalla unas estadisticas de el número de mensajes enviados, recibidos, los que son spam, porcentaje de spam,
      * la direccion de la persona que nos ha enviado el mensaje más largo y los caracteres que tenía.
@@ -168,31 +167,33 @@ public class MailClient
         System.out.println("Direccion de correo más largo recibido: " + nombreCorreoMasLargo);
         System.out.println("Numero de caracteres del mensaje más largo : " + mensajeMasLargo);
     }
-    
+
     /**
      * Este metodo muestra por pantalla los datos del último spam recibido y si no se ha recibido ninguno nos informará de ello
      */
     public void showInfoSpam()
     {
         if (buzonSpam != null) {
-             buzonSpam.print();
+            buzonSpam.print();
         }
         else {
             System.out.println("No ha recibido ningún mensaje con spam aún");
         }
     }
-    
+
     /**
      * Metodo para simular mensaje transmitido con errores
      */
     public void sendMailItemWithTransmissionError(String para, String asunto, String mensaje)
     {
+       if (mensaje.contains("o")) {
+           mensaje.replace("o", "#o");
+        } 
+       if (mensaje.contains("i")) {
+           mensaje.replace("i", "$i");
+        }   
         MailItem email = new MailItem(user, para, asunto, mensaje);
-        if (email.getMessage().contains("o")) {
-            email.getMessage().replace("o", "#o");
-            email.getMessage().replace("i", "$i");
-            server.post(email);
-            correosEnviados++;
-        }
+        server.post(email);
+        correosEnviados++;
     }
-} 
+}
