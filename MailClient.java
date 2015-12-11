@@ -186,11 +186,11 @@ public class MailClient
      */
     public void sendMailItemWithTransmissionError(String para, String asunto, String mensaje)
     {
-       if (mensaje.contains("o")) {
-           mensaje.replace("o", "#o");
+        if (mensaje.contains("o")) {
+            mensaje = mensaje.replace("o", "#o");
         } 
-       if (mensaje.contains("i")) {
-           mensaje.replace("i", "$i");
+        if (mensaje.contains("i")) {
+            mensaje = mensaje.replace("i", "$i");
         }   
         MailItem email = new MailItem(user, para, asunto, mensaje);
         server.post(email);
